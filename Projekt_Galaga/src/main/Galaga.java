@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 import core.IGameObject;
+import core.IMovable;
 import core.Ship;
 import core.Star;
 
@@ -25,16 +26,18 @@ public class Galaga extends JPanel implements Runnable {
     private final int INITIAL_X = 0;
     private final int INITIAL_Y = 0;
 
-    Random rand = new Random();
+    private Random rand = new Random();
 
     private Image star;
     private Thread animator;
     private int x, y;
 
-    List<IGameObject> gObjs;
+    private List<IGameObject> beckground;
+    private List<IGameObject> gameObjects;
+    private IMovable ship;
 
     public Galaga() {
-	gObjs = new ArrayList<>();
+	beckground = new ArrayList<>();
 
 	init();
     }
@@ -47,9 +50,9 @@ public class Galaga extends JPanel implements Runnable {
 
     private void loadGameObjects() {
 	for (int i = 0; i < 30; i++) {
-	    gObjs.add(new Star(W_WIDTH, W_HEIGHT));
+	    beckground.add(new Star(W_WIDTH, W_HEIGHT));
 	}
-	gObjs.add(new Ship(W_WIDTH, W_HEIGHT));
+	beckground.add(new Ship(W_WIDTH, W_HEIGHT));
     }
 
     private void init() {
@@ -78,8 +81,8 @@ public class Galaga extends JPanel implements Runnable {
 	
 	super.paintComponent(g2);
 
-	for (int i = 0; i < gObjs.size(); i++) {
-	    gObjs.get(i).display(g2);
+	for (int i = 0; i < beckground.size(); i++) {
+	    beckground.get(i).display(g2);
 	}
 	drawStar(g2);
 	
@@ -95,8 +98,8 @@ public class Galaga extends JPanel implements Runnable {
 
     private void cycle() {
 
-	for (int i = 0; i < gObjs.size(); i++) {
-	    gObjs.get(i).update();
+	for (int i = 0; i < beckground.size(); i++) {
+	    beckground.get(i).update();
 	}
 
 	// ************************************************************************
