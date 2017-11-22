@@ -1,5 +1,5 @@
 package core;
 
-public interface IMovable extends IGameObject {
-    void move();
+public interface IMovable extends IColisionable {
+    void move(int keyCode);
 }

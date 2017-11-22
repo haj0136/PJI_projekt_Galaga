@@ -12,37 +12,36 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class MainWindow extends JFrame {
-	
-	public MainWindow(){
-		initUI();
-	}
-	
-	private void initUI() {
-		add(new Galaga());
-		setResizable(false);
-		pack();
-		
-		setTitle("Galaga");
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		try{ 
-			setIconImage(ImageIO.read(new File("src/images/Galagaship.png")));
-		} 
-	    catch (IOException e){
-			e.printStackTrace();
-		}
-		
+
+    public MainWindow() {
+	initUI();
+    }
+
+    private void initUI() {
+	add(new Galaga());
+	setResizable(false);
+	pack();
+
+	setTitle("Galaga");
+	setLocationRelativeTo(null);
+	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	try {
+	    setIconImage(ImageIO.read(new File("src/images/Galagaship.png")));
+	} catch (IOException e) {
+	    e.printStackTrace();
 	}
 
-	public static void main(String[] args) {
-		
-		EventQueue.invokeLater(new Runnable() {
-            
-            @Override
-            public void run() {                
-                JFrame ex = new MainWindow();
-                ex.setVisible(true);                
-            }
-        });
-	}
+    }
+
+    public static void main(String[] args) {
+
+	EventQueue.invokeLater(new Runnable() {
+
+	    @Override
+	    public void run() {
+		JFrame ex = new MainWindow();
+		ex.setVisible(true);
+	    }
+	});
+    }
 }
