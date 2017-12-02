@@ -2,25 +2,33 @@ package core;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 
 import main.Galaga;
 
-public class Ship implements IGameObject, IMovable {
+public class Ship implements IMovable {
 
     private int x, y;
     private int dx;
     private int width, height;
     private int canvas_width, canvas_height;
     private Image image;
-    private int health;
+    private int lives;
     private List<IColisionable> missiles;
-    private boolean reload;
+    private boolean reloading;
+    private boolean invicible;
+    
+    private Timer timer = new Timer();
+    Random rand = new Random();
 
     public Ship(int width, int height) {
 	ImageIcon ii = new ImageIcon("src/images/spco-small.png");
@@ -30,13 +38,14 @@ public class Ship implements IGameObject, IMovable {
 	this.height = image.getHeight(null);
 	this.x = width / 2 - this.width / 2;
 	this.y = height - this.height - height / 100;
-	this.health = 3;
+	this.lives = 3;
 	this.dx = 0;
 	
 	missiles = new ArrayList<>();
 	canvas_height = height;
 	canvas_width = width;
-	reload = false;
+	reloading = false;
+	invicible = false;
     }
 
     @Override
@@ -47,7 +56,7 @@ public class Ship implements IGameObject, IMovable {
 	
 	for (int i = 0; i < missiles.size(); i++) {
 	    missiles.get(i).update();
-	    if(missiles.get(i).getY() < 0){
+	    if(missiles.get(i).getY() < 0 || missiles.get(i).getLives() <= 0){
 		missiles.remove(i);
 	    }
 	}
@@ -55,9 +64,18 @@ public class Ship implements IGameObject, IMovable {
 
     @Override
     public void display(Graphics2D g2) {
-	g2.drawImage(image, x, y, null);
-	Toolkit.getDefaultToolkit().sync();
+	if(invicible == true){
+	    if(rand.nextInt(2) == 0){
+		g2.drawImage(image, x, y, null);
+	    }else{
+		g2.drawImage(null, x, y, null);
+	    }
+		
+	}else{
+	    g2.drawImage(image, x, y, null);
+	}
 	
+	Toolkit.getDefaultToolkit().sync();
 	for (int i = 0; i < missiles.size(); i++) {
 	    missiles.get(i).display(g2);
 	}
@@ -74,13 +92,13 @@ public class Ship implements IGameObject, IMovable {
 	}
 	if (keyCode == 0) {
 	    this.dx = 0;
-	    reload = false;
+	    reloading = false;
 	}
 	if (keyCode == KeyEvent.VK_SPACE) {
-	    if(reload == false){
-		missiles.add(new Missile(canvas_width, canvas_height, x - 3 + width/2, y));
+	    if(reloading == false){
+		missiles.add(new Missile(canvas_width, canvas_height, x - 3 + width/2, y, false));
 	    }
-	    reload = true;
+	    reloading = true;
 	}
     }
 
@@ -92,6 +110,36 @@ public class Ship implements IGameObject, IMovable {
     @Override
     public int getY() {
 	return y;
+    }
+
+    @Override
+    public Rectangle getBounds() {
+	return new Rectangle(x, y, width, height);
+    }
+    
+    @Override
+    public int getLives() {
+	return lives;
+    }
+
+    @Override
+    public void hit() {
+	if (!invicible) {
+	    this.lives--;
+	    this.invicible = true;
+	
+	    timer.schedule(new TimerTask() {
+		@Override
+		public void run() {
+		    invicible = false;
+		}
+	    }, 3*1000);
+	}
+    }
+
+    @Override
+    public List<IColisionable> getMissiles() {
+	return missiles;
     }
 
 }
