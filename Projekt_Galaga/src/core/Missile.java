@@ -6,7 +6,8 @@ import java.awt.Rectangle;
 
 public class Missile implements IColisionable {
 
-    private final int MISSILE_SPEED = 3;
+    private final int MISSILE_SPEED = 12;
+    private final int ENEMY_MISSILE_SPEED = 3;
     private final int WIDTH = 5;
     private final int HEIGHT = 15;
 
@@ -25,7 +26,7 @@ public class Missile implements IColisionable {
     @Override
     public void update() {
 	if (enemy) {
-	    this.y += MISSILE_SPEED;
+	    this.y += ENEMY_MISSILE_SPEED;
 	} else {
 	    this.y -= MISSILE_SPEED;
 	}

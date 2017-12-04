@@ -31,7 +31,7 @@ public class Galaga extends JPanel implements Runnable {
      * 
      */
     private static final long serialVersionUID = -7633361599519463715L;
-    
+
     private final int W_HEIGHT = 700;
     private final int W_WIDTH = 500;
     private final int NUMBER_OF_ALIENS = 8;
@@ -67,6 +67,9 @@ public class Galaga extends JPanel implements Runnable {
 			resetGame();
 			ingame = true;
 		    }
+		}
+		if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+		    System.exit(ERROR);
 		}
 	    }
 
@@ -105,7 +108,7 @@ public class Galaga extends JPanel implements Runnable {
 	ingame = true;
 	score = 0;
 	level = 0;
-	
+
 	hm = new HighScoreManager();
 
     }
@@ -167,6 +170,13 @@ public class Galaga extends JPanel implements Runnable {
 			aliens.add(
 				new Alien(W_WIDTH, W_HEIGHT, (W_WIDTH / 2 - (NUMBER_OF_ALIENS / 2 * 45) - 3) + (i * 45),
 					(W_HEIGHT / 4) + (j * 25), 3, level));
+			if (i != 1 && i != NUMBER_OF_ALIENS - 2) {
+			    if (level % 3 == 0) {
+				aliens.add(new Alien(W_WIDTH, W_HEIGHT,
+					(W_WIDTH / 2 - (NUMBER_OF_ALIENS / 2 * 55) - 3) + (i * 55),
+					(W_HEIGHT / 4) + (j - 1 * 35), 5, level));
+			    } 
+			}
 		    }
 		} else if (j == 1) {
 		    aliens.add(new Alien(W_WIDTH, W_HEIGHT, (W_WIDTH / 2 - (NUMBER_OF_ALIENS / 2 * 35) - 3) + (i * 35),
@@ -240,21 +250,21 @@ public class Galaga extends JPanel implements Runnable {
 
 	g2.setFont(new Font("Goudy Stout", Font.PLAIN, 20));
 	g2.drawString("Score: " + this.score, W_WIDTH / 2 - 100, W_HEIGHT / 3 + 45);
-	
+
 	// top 5 score
 	g2.setFont(new Font("Halvetica", Font.PLAIN, 15));
-	g2.drawString("Top 5 score :", W_WIDTH /2 - 50, W_HEIGHT /3 + 70 );
-	
+	g2.drawString("Top 5 score :", W_WIDTH / 2 - 50, W_HEIGHT / 3 + 70);
+
 	String line;
 	for (int i = 0; i < 5; i++) {
-	    line = i + 1 + ". " + hm.getScores().get(i).getName() + " - " +  hm.getScores().get(i).getScore();
-	    g2.drawString(line, W_WIDTH /2 - 60, W_HEIGHT /3 + 90 + i*15 );
+	    line = i + 1 + ". " + hm.getScores().get(i).getName() + " - " + hm.getScores().get(i).getScore();
+	    g2.drawString(line, W_WIDTH / 2 - 60, W_HEIGHT / 3 + 90 + i * 15);
 	}
 
 	// options text
 	g2.setFont(new Font("Halvetica", Font.ITALIC, 15));
 	g2.drawString("ENTER = retry", 10, W_HEIGHT - 100);
-	g2.drawString("ESC = menu", 10, W_HEIGHT - 80);
+	g2.drawString("ESC = exit", 10, W_HEIGHT - 80);
 
     }
 
@@ -264,7 +274,6 @@ public class Galaga extends JPanel implements Runnable {
 	this.aliens.clear();
 	this.level = 0;
     }
-    
 
     @Override
     public void run() {

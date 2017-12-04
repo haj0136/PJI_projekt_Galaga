@@ -48,7 +48,16 @@ public class Ship implements IMovable {
 
     @Override
     public void update() {
-	this.x += this.dx;
+	if(x >= 0 && x <= canvas_width - width){
+	    this.x += this.dx;
+	}
+	else if(x < 0){
+	  this.x = 0;  
+	}
+	else{
+	  this.x = canvas_width - width;
+	}
+	
 	// System.out.println(x);
 
 	for (int i = 0; i < missiles.size(); i++) {
@@ -81,11 +90,13 @@ public class Ship implements IMovable {
     @Override
     public void move(int keyCode) {
 	if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_A) {
-	    this.dx = -2;
+	    if(this.x != 0)
+	    this.dx = -3;
 
 	}
 	if (keyCode == KeyEvent.VK_RIGHT || keyCode == KeyEvent.VK_D) {
-	    this.dx = 2;
+	    if(this.x != canvas_width - width)
+	    this.dx = 3;
 	}
 
 	if (keyCode == KeyEvent.VK_SPACE) {

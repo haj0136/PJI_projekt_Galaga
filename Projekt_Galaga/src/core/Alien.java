@@ -52,7 +52,7 @@ public class Alien implements IShootable {
 
 	if (intro) {
 	    if (this.y != baseYPos) {
-		this.y++;
+		this.y += 2;
 	    } else {
 		intro = false;
 	    }
@@ -101,27 +101,28 @@ public class Alien implements IShootable {
 	switch (type) {
 	case 0:
 	    ii = new ImageIcon("src/images/Redgalaga.png");
-	    this.fireChance = 5000;
-	    this.lives = 2;
-	    break;
-	case 1:
-	    ii = new ImageIcon("src/images/Yellowgalaga.png");
-	    this.fireChance = 5000;
-	    this.lives = 2;
-	    break;
-	case 2:
-	    ii = new ImageIcon("src/images/Galagacommander.png");
-	    this.fireChance = 6000;
-	    this.lives = 1;
-	    break;
-	case 3:
-	    ii = new ImageIcon("src/images/Big_galaga2.png");
 	    this.fireChance = 4000;
 	    this.lives = 3;
 	    break;
-	default:
+	case 1:
+	    ii = new ImageIcon("src/images/Yellowgalaga.png");
+	    this.fireChance = 4000;
+	    this.lives = 3;
+	    break;
+	case 2:
 	    ii = new ImageIcon("src/images/Galagacommander.png");
-	    this.fireChance = 6000;
+	    this.fireChance = 5000;
+	    this.lives = 2;
+	    break;
+	case 3:
+	    ii = new ImageIcon("src/images/Big_galaga2.png");
+	    this.fireChance = 3000;
+	    this.lives = 5;
+	    break;
+	default:
+	    ii = new ImageIcon("src/images/Bluegalaxian.png");
+	    this.fireChance = 2000;
+	    this.lives = 8;
 	    break;
 	}
 	return ii.getImage();
@@ -143,7 +144,9 @@ public class Alien implements IShootable {
     }
 
     private void shoot() {
-	missiles.add(new Missile(canvas_width, canvas_height, x - 3 + width / 2, y + height, true));
+	if (!intro) {
+	    missiles.add(new Missile(canvas_width, canvas_height, x - 3 + width / 2, y + height, true));
+	}
     }
 
     @Override
