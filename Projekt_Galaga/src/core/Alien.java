@@ -19,7 +19,8 @@ public class Alien implements IShootable {
     private int step = 1;
     private int xBound = 50;
     private List<IColisionable> missiles;
-    
+    private int fireChance; // higher fireChance = less chance to shoot
+
     private int baseYPos, baseXPos;
     private boolean intro = true;
 
@@ -27,12 +28,11 @@ public class Alien implements IShootable {
 
     /************************
      * 
-     * type 0-4
-     * : choose look of alien
+     * type 0-4 : choose look of alien
      */
-    public Alien(int canvas_width, int canvas_height, int xPos, int yPos, int type) {
+    public Alien(int canvas_width, int canvas_height, int xPos, int yPos, int type, int level) {
 	image = loadImage(type);
-	
+
 	this.x = xPos;
 	this.y = yPos - 500;
 	this.canvas_height = canvas_height;
@@ -41,35 +41,36 @@ public class Alien implements IShootable {
 	this.height = image.getHeight(null);
 	this.missiles = new ArrayList<>();
 
-	
+	this.fireChance /= level;
+
 	baseYPos = yPos;
 	baseXPos = xPos;
     }
 
     @Override
     public void update() {
-	
+
 	if (intro) {
 	    if (this.y != baseYPos) {
 		this.y++;
-	    }else{
+	    } else {
 		intro = false;
 	    }
-	}else{
-	    if(this.x >= baseXPos - xBound && this.x <= baseXPos + xBound){
-	    	this.x += step;
-	    	if(this.x == baseXPos - xBound || this.x == baseXPos + xBound)
-	    	    step = step*-1;
+	} else {
+	    if (this.x >= baseXPos - xBound && this.x <= baseXPos + xBound) {
+		this.x += step;
+		if (this.x == baseXPos - xBound || this.x == baseXPos + xBound)
+		    step = step * -1;
 	    }
 	}
-	
-	if(rand.nextInt(5000) == 0){
+
+	if (rand.nextInt(fireChance) == 0) {
 	    shoot();
 	}
-	
+
 	for (int i = 0; i < missiles.size(); i++) {
 	    missiles.get(i).update();
-	    if(missiles.get(i).getY() > canvas_height || missiles.get(i).getLives() <= 0){
+	    if (missiles.get(i).getY() > canvas_height || missiles.get(i).getLives() <= 0) {
 		missiles.remove(i);
 	    }
 	}
@@ -79,7 +80,7 @@ public class Alien implements IShootable {
     @Override
     public void display(Graphics2D g2) {
 	g2.drawImage(image, x, y, null);
-	
+
 	for (int i = 0; i < missiles.size(); i++) {
 	    missiles.get(i).display(g2);
 	}
@@ -100,21 +101,27 @@ public class Alien implements IShootable {
 	switch (type) {
 	case 0:
 	    ii = new ImageIcon("src/images/Redgalaga.png");
+	    this.fireChance = 5000;
 	    this.lives = 2;
 	    break;
 	case 1:
 	    ii = new ImageIcon("src/images/Yellowgalaga.png");
+	    this.fireChance = 5000;
 	    this.lives = 2;
 	    break;
 	case 2:
 	    ii = new ImageIcon("src/images/Galagacommander.png");
+	    this.fireChance = 6000;
 	    this.lives = 1;
 	    break;
 	case 3:
 	    ii = new ImageIcon("src/images/Big_galaga2.png");
+	    this.fireChance = 4000;
 	    this.lives = 3;
 	    break;
-	default: ii = new ImageIcon("src/images/Galagacommander.png");
+	default:
+	    ii = new ImageIcon("src/images/Galagacommander.png");
+	    this.fireChance = 6000;
 	    break;
 	}
 	return ii.getImage();
@@ -124,7 +131,7 @@ public class Alien implements IShootable {
     public Rectangle getBounds() {
 	return new Rectangle(x, y, width, height);
     }
-    
+
     @Override
     public int getLives() {
 	return lives;
@@ -134,9 +141,9 @@ public class Alien implements IShootable {
     public void hit() {
 	this.lives--;
     }
-    
-    private void shoot(){
-	missiles.add(new Missile(canvas_width, canvas_height, x - 3 + width/2, y + height, true));
+
+    private void shoot() {
+	missiles.add(new Missile(canvas_width, canvas_height, x - 3 + width / 2, y + height, true));
     }
 
     @Override

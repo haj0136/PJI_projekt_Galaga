@@ -1,17 +1,18 @@
 package main;
 
 import java.awt.EventQueue;
-import java.awt.Graphics;
-import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class MainWindow extends JFrame {
+
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 2427719776404652569L;
 
     public MainWindow() {
 	initUI();
