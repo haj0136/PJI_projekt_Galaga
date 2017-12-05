@@ -5,6 +5,7 @@ import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,7 +30,8 @@ public class Ship implements IMovable {
     Random rand = new Random();
 
     public Ship(int width, int height) {
-	ImageIcon ii = new ImageIcon("src/images/spco-small.png");
+	URL url = Ship.class.getResource("/resources/spco-small.png");
+	ImageIcon ii = new ImageIcon(url);
 	image = ii.getImage();
 
 	this.width = image.getWidth(null);

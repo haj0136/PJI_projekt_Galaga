@@ -25,6 +25,7 @@ public final class IO
 //== PROMENNE ATRIBUTY TRIDY ===================================================
 
     /** Pozice dialogovych oken. */
+    @SuppressWarnings("unused")
     private static Point positionOfWindows = new Point(0,0);
 
 

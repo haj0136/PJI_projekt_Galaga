@@ -3,9 +3,12 @@ package main;
 import java.awt.EventQueue;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
+
+import core.Ship;
 
 public class MainWindow extends JFrame {
 
@@ -27,7 +30,7 @@ public class MainWindow extends JFrame {
 	setLocationRelativeTo(null);
 	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	try {
-	    setIconImage(ImageIO.read(new File("src/images/Galagaship.png")));
+	    setIconImage(ImageIO.read(new File("src/resources/Galagaship.png")));
 	} catch (IOException e) {
 	    e.printStackTrace();
 	}

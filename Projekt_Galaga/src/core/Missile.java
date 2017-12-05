@@ -7,7 +7,7 @@ import java.awt.Rectangle;
 public class Missile implements IColisionable {
 
     private final int MISSILE_SPEED = 12;
-    private final int ENEMY_MISSILE_SPEED = 3;
+    private final int ENEMY_MISSILE_SPEED = 4;
     private final int WIDTH = 5;
     private final int HEIGHT = 15;
 

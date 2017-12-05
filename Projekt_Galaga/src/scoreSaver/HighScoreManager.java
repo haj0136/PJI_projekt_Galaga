@@ -2,8 +2,6 @@ package scoreSaver;
 
 import java.util.*;
 
-import javax.swing.JOptionPane;
-
 import java.io.*;
 
 public class HighScoreManager {
@@ -37,6 +35,7 @@ public class HighScoreManager {
         updateScoreFile();
     }
     
+    @SuppressWarnings("unchecked")
     public void loadScoreFile() {
         try {
             inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));

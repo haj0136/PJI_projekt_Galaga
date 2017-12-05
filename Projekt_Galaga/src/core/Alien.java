@@ -3,6 +3,7 @@ package core;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -51,8 +52,8 @@ public class Alien implements IShootable {
     public void update() {
 
 	if (intro) {
-	    if (this.y != baseYPos) {
-		this.y += 2;
+	    if (this.y <= baseYPos) {
+		this.y += 3;
 	    } else {
 		intro = false;
 	    }
@@ -98,29 +99,35 @@ public class Alien implements IShootable {
 
     private Image loadImage(int type) {
 	ImageIcon ii = null;
+	URL url = null;
 	switch (type) {
 	case 0:
-	    ii = new ImageIcon("src/images/Redgalaga.png");
+	    url = Alien.class.getResource("/resources/Redgalaga.png");
+	    ii = new ImageIcon(url);
 	    this.fireChance = 4000;
 	    this.lives = 3;
 	    break;
 	case 1:
-	    ii = new ImageIcon("src/images/Yellowgalaga.png");
+	    url = Alien.class.getResource("/resources/Yellowgalaga.png");
+	    ii = new ImageIcon(url);
 	    this.fireChance = 4000;
 	    this.lives = 3;
 	    break;
 	case 2:
-	    ii = new ImageIcon("src/images/Galagacommander.png");
+	    url = Alien.class.getResource("/resources/Galagacommander.png");
+	    ii = new ImageIcon(url);
 	    this.fireChance = 5000;
 	    this.lives = 2;
 	    break;
 	case 3:
-	    ii = new ImageIcon("src/images/Big_galaga2.png");
+	    url = Alien.class.getResource("/resources/Big_galaga2.png");
+	    ii = new ImageIcon(url);
 	    this.fireChance = 3000;
 	    this.lives = 5;
 	    break;
 	default:
-	    ii = new ImageIcon("src/images/Bluegalaxian.png");
+	    url = Alien.class.getResource("/resources/Bluegalaxian.png");
+	    ii = new ImageIcon(url);
 	    this.fireChance = 2000;
 	    this.lives = 8;
 	    break;

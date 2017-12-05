@@ -22,7 +22,6 @@ import core.IShootable;
 import core.Ship;
 import core.Star;
 import scoreSaver.HighScoreManager;
-import scoreSaver.Score;
 import utils.IO;
 
 public class Galaga extends JPanel implements Runnable {
@@ -256,7 +255,11 @@ public class Galaga extends JPanel implements Runnable {
 	g2.drawString("Top 5 score :", W_WIDTH / 2 - 50, W_HEIGHT / 3 + 70);
 
 	String line;
-	for (int i = 0; i < 5; i++) {
+	int size = hm.getScores().size();
+	if (size > 5){
+	    size = 5;
+	}
+	for (int i = 0; i < size; i++) {
 	    line = i + 1 + ". " + hm.getScores().get(i).getName() + " - " + hm.getScores().get(i).getScore();
 	    g2.drawString(line, W_WIDTH / 2 - 60, W_HEIGHT / 3 + 90 + i * 15);
 	}
