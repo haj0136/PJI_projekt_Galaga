@@ -104,31 +104,31 @@ public class Alien implements IShootable {
 	case 0:
 	    url = Alien.class.getResource("/resources/Redgalaga.png");
 	    ii = new ImageIcon(url);
-	    this.fireChance = 4000;
+	    this.fireChance = 3000;
 	    this.lives = 3;
 	    break;
 	case 1:
 	    url = Alien.class.getResource("/resources/Yellowgalaga.png");
 	    ii = new ImageIcon(url);
-	    this.fireChance = 4000;
+	    this.fireChance = 3000;
 	    this.lives = 3;
 	    break;
 	case 2:
 	    url = Alien.class.getResource("/resources/Galagacommander.png");
 	    ii = new ImageIcon(url);
-	    this.fireChance = 5000;
+	    this.fireChance = 4000;
 	    this.lives = 2;
 	    break;
 	case 3:
 	    url = Alien.class.getResource("/resources/Big_galaga2.png");
 	    ii = new ImageIcon(url);
-	    this.fireChance = 3000;
+	    this.fireChance = 2000;
 	    this.lives = 5;
 	    break;
 	default:
 	    url = Alien.class.getResource("/resources/Bluegalaxian.png");
 	    ii = new ImageIcon(url);
-	    this.fireChance = 2000;
+	    this.fireChance = 1000;
 	    this.lives = 8;
 	    break;
 	}
